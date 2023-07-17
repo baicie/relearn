@@ -95,6 +95,54 @@ export class PromiseSource {
       }
     })
   }
+
+  caches(onRejected) {
+    return this.then(null, onRejected)
+  }
+
+  static resolve(value) {
+    if (value instanceof PromiseSource)
+      return value
+    return new PromiseSource(resolve => resolve(value))
+  }
+
+  static all(list) {
+    return new PromiseSource((resolve, reject) => {
+      let count = 0
+      const values = []
+
+      for (const [i, PromiseInstance] of Object.entries(list)) {
+        PromiseSource.resolve(PromiseInstance)
+          .then(
+            (res) => {
+              values[i] = res
+              count++
+              if (count === list.length)
+                resolve(values)
+            },
+            (err) => {
+              reject(err)
+            },
+          )
+      }
+    })
+  }
+
+  static race(list) {
+    return new PromiseSource((resolve, reject) => {
+      list.forEach((item) => {
+        PromiseSource.resolve(item)
+          .then(
+            (res) => {
+              resolve(res)
+            },
+            (err) => {
+              reject(err)
+            },
+          )
+      })
+    })
+  }
 }
 
 const promise1 = new PromiseSource((resolve, reject) => {
