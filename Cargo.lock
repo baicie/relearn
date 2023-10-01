@@ -74,6 +74,14 @@ name = "ch09-01-unrecoverable-errors-with-panic"
 version = "0.1.0"
 
 [[package]]
+name = "ch09-02-recoverable-errors-with-result"
+version = "0.1.0"
+
+[[package]]
+name = "ch09-03-to-panic-or-not-to-panic"
+version = "0.1.0"
+
+[[package]]
 name = "cloudabi"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
