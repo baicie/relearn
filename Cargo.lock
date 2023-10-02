@@ -82,6 +82,22 @@ name = "ch09-03-to-panic-or-not-to-panic"
 version = "0.1.0"
 
 [[package]]
+name = "ch10-01-syntax"
+version = "0.1.0"
+
+[[package]]
+name = "ch10-02-traits"
+version = "0.1.0"
+
+[[package]]
+name = "ch10-03-lifetime-syntax"
+version = "0.1.0"
+
+[[package]]
+name = "ch11-01-writing-tests"
+version = "0.1.0"
+
+[[package]]
 name = "cloudabi"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
