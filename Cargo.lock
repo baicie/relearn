@@ -106,6 +106,14 @@ name = "ch11-03-test-organization"
 version = "0.1.0"
 
 [[package]]
+name = "ch12-01-accepting-command-line-arguments"
+version = "0.1.0"
+
+[[package]]
+name = "ch13-01-closures"
+version = "0.1.0"
+
+[[package]]
 name = "cloudabi"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
