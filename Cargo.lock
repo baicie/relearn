@@ -102,6 +102,10 @@ name = "ch11-02-running-tests"
 version = "0.1.0"
 
 [[package]]
+name = "ch11-03-test-organization"
+version = "0.1.0"
+
+[[package]]
 name = "cloudabi"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
