@@ -1,5 +1,5 @@
-use ch14_01_release_profiles::mix;
-use ch14_01_release_profiles::PrimaryColor;
+use baicie_package_test::mix;
+use baicie_package_test::PrimaryColor;
 
 fn main() {
     let red = PrimaryColor::Red;
