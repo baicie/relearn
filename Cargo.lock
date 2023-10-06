@@ -177,6 +177,14 @@ name = "ch16-04-extensible-concurrency-sync-and-send"
 version = "0.1.0"
 
 [[package]]
+name = "ch17-02-trait-objects"
+version = "0.1.0"
+
+[[package]]
+name = "ch20-01-single-threaded"
+version = "0.1.0"
+
+[[package]]
 name = "cloudabi"
 version = "0.0.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
