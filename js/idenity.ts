@@ -3,11 +3,11 @@ function validator(value) {
   const idCard = value
   // 2.身份证中的X，必须是大写的
   if (value.includes('x'))
-    return false
+    return '证件号码错误'
 
   // 3.判断输入的身份证长度
   if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(idCard)))
-    return false
+    return '证件号码错误'
 
   // 4.验证前两位城市编码是否正确
   const aCity = {
@@ -48,29 +48,29 @@ function validator(value) {
     91: '国外',
   }
   if (aCity[Number.parseInt(idCard.substr(0, 2))] === null)
-    return false
+    return '证件号码错误'
 
   // 5.验证出生日期和校验位
   if (validId15(idCard) || validId18(idCard))
     return true
 
   else
-    return false
+    return '证件号码错误'
 
   // 身份证18位号码验证
   function validId18(str) {
     if (str.length !== 18)
-      return false
+      return '证件号码错误'
 
     // 1. 出生日期验证
     const re = /^(\d{6})(\d{4})(\d{2})(\d{2})(\d{3})([0-9]|X)$/
     const arrSplit = str.match(re) // 检查生日日期是否正确
     if (arrSplit != null) {
       if (!YearMonthDayValidate(arrSplit[2], arrSplit[3], arrSplit[4]))
-        return false
+        return '证件号码错误'
     }
     else {
-      return false
+      return '证件号码错误'
     }
     // 2. 校验位验证
     const iW = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2, 1]// 加权因子
@@ -107,7 +107,7 @@ function validator(value) {
       sJYM = '2'
     const cCheck = str.charAt(17).toLowerCase()
     if (cCheck !== sJYM)
-      return false
+      return '证件号码错误'
 
     return true
   }
@@ -115,7 +115,7 @@ function validator(value) {
   // 身份证15位(1984-2004)身份验证
   function validId15(str) {
     if (str.length !== 15)
-      return false
+      return '证件号码错误'
 
     // 1. 出生日期验证
     const re = /^(\d{6})(\d{2})(\d{2})(\d{2})(\d{3})$/
@@ -128,10 +128,10 @@ function validator(value) {
         arrSplit[2] = `20${arrSplit[2]}`
 
       if (!YearMonthDayValidate(arrSplit[2], arrSplit[3], arrSplit[4]))
-        return false
+        return '证件号码错误'
     }
     else {
-      return false
+      return '证件号码错误'
     }
     return true
   }
@@ -143,17 +143,17 @@ function validator(value) {
     day = Number.parseInt(day)// 日
     // 判断年，月,日是否为空
     if (Number.isNaN(year) || Number.isNaN(month) || Number.isNaN(day))
-      return false
+      return '证件号码错误'
 
     // 判断月是否是在1-12月之间
     if (month < 1 || month > 12)
-      return false
+      return '证件号码错误'
 
     // 返回当月的最后一天
     const date = new Date(year, month, 0)
     // 判断是否超过天数范围
     if (day < 1 || day > date.getDate())
-      return false
+      return '证件号码错误'
 
     return true
   }
