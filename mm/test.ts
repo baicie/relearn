@@ -4962,6 +4962,6 @@ function initRowModel(item, path, level) {
   }
 }
 
-const res = initTree(newData)
+const res = initTree(data)
 
-fs.writeFileSync('./out1.json', JSON.stringify(res))
+fs.writeFileSync('./out.json', JSON.stringify(res))
