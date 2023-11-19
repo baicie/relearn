@@ -34,7 +34,7 @@ function matchString(str: string) {
 }
 
 function deleteArrItem(arr: any[], codes: string[]) {
-  return arr.filter((item) => codes.includes(item.labelName));
+  return arr.filter((item) => !codes.includes(item.labelName));
 }
 
 const codes = matchString(str);
