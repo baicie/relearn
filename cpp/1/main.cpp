@@ -1,7 +1,8 @@
 #include <iostream>
 using namespace std;
 
-int main(){
+int main()
+{
   cout << "Running" << endl;
   return 0;
 }
