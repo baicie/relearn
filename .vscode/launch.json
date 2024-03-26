@@ -34,8 +34,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/workspace/git-code/relearn/cpp/2.4.5",
-      "program": "d:/workspace/git-code/relearn/cpp/2.4.5/build/Debug/outDebug",
+      "cwd": "d:/workspace/git-code/relearn/cpp/3/3.1",
+      "program": "d:/workspace/git-code/relearn/cpp/3/3.1/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
