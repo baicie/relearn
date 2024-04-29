@@ -42,6 +42,7 @@ func (r *registry) sendRequiredServices(reg Registration) error {
 		}
 
 	}
+	log.Printf("Added services: %v\n", reg, p)
 	err := r.sendPatch(p, reg.ServiceUpdateURL)
 	if err != nil {
 		return err
