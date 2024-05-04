@@ -12,7 +12,6 @@ import (
 )
 
 func RegisterServie(r Registration) error {
-	log.Printf("Registering service %v\n", r)
 	serviceUpdateURL, err := url.Parse(r.ServiceUpdateURL)
 	if err != nil {
 		return err
@@ -41,7 +40,6 @@ func RegisterServie(r Registration) error {
 type serviceUpdateHandler struct{}
 
 func (suh serviceUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	log.Println("Request received by registry client")
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
@@ -96,7 +94,7 @@ func (p *providers) Update(pat patch) {
 		if urls, ok := p.services[entry.Name]; ok {
 			for i := range urls {
 				if urls[i] == entry.URL {
-					p.services[entry.Name] = append(urls[:i], urls[:i+1]...)
+					p.services[entry.Name] = append(urls[:i], urls[i+1:]...)
 				}
 			}
 		}
@@ -106,7 +104,6 @@ func (p *providers) Update(pat patch) {
 
 func (p *providers) get(name ServiceName) (string, error) {
 	providers, ok := p.services[name]
-	log.Printf("Providers: %v\n", p.services)
 	if !ok {
 		return "", fmt.Errorf("No providers available for service %s", name)
 	}

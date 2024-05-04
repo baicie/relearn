@@ -23,7 +23,52 @@ func (r *registry) add(reg Registration) error {
 	r.registrations = append(r.registrations, reg)
 	r.mutex.Unlock()
 	err := r.sendRequiredServices(reg)
+	r.notify(patch{
+		Added: []patchEntry{
+			{
+				Name: reg.ServiceName,
+				URL:  reg.ServiceURL,
+			},
+		},
+	})
 	return err
+}
+
+func (r registry) notify(fullPath patch) {
+	r.mutex.RLock()
+	defer r.mutex.RUnlock()
+
+	for _, reg := range r.registrations {
+		go func(reg Registration) {
+			for _, reqService := range reg.RequiredServices {
+				p := patch{
+					Added:   []patchEntry{},
+					Removed: []patchEntry{},
+				}
+				sendUpdate := false
+				for _, added := range fullPath.Added {
+					if added.Name == reqService {
+						p.Added = append(p.Added, added)
+						sendUpdate = true
+					}
+				}
+				for _, removed := range fullPath.Removed {
+					if removed.Name == reqService {
+						p.Removed = append(p.Removed, removed)
+						sendUpdate = true
+					}
+				}
+
+				if sendUpdate {
+					err := r.sendPatch(p, reg.ServiceUpdateURL)
+					if err != nil {
+						log.Println(err)
+						return
+					}
+				}
+			}
+		}(reg)
+	}
 }
 
 func (r *registry) sendRequiredServices(reg Registration) error {
@@ -42,7 +87,6 @@ func (r *registry) sendRequiredServices(reg Registration) error {
 		}
 
 	}
-	log.Printf("Added services: %v\n", reg, p)
 	err := r.sendPatch(p, reg.ServiceUpdateURL)
 	if err != nil {
 		return err
@@ -66,7 +110,7 @@ func (r *registry) remove(url string) error {
 	for i := range r.registrations {
 		if reg.registrations[i].ServiceURL == url {
 			r.mutex.Lock()
-			reg.registrations = append(reg.registrations[:i], reg.registrations[:i+1]...)
+			reg.registrations = append(reg.registrations[:i], reg.registrations[i+1:]...)
 			r.mutex.Unlock()
 			return nil
 		}
@@ -82,7 +126,6 @@ var reg = registry{
 type RegistryService struct{}
 
 func (s RegistryService) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	log.Println("Request received")
 	switch r.Method {
 	case http.MethodPost:
 		dec := json.NewDecoder(r.Body)

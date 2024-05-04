@@ -11,7 +11,6 @@ import (
 func Start(ctx context.Context, host, port string, reg registry.Registration,
 	registerHandlerFunc func()) (context.Context, error) {
 	registerHandlerFunc()
-	log.Println("Starting service at", host, port)
 	ctx = startService(ctx, reg.ServiceName, host, port)
 	err := registry.RegisterServie(reg)
 	if err != nil {

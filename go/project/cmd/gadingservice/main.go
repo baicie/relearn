@@ -28,7 +28,6 @@ func main() {
 	}
 
 	if logProvider, err := registry.GetProvider(registry.LogService); err == nil {
-		stlog.Printf("Log service found at: %s\n", logProvider)
 		fmt.Printf("Logging service found at: %s\n", logProvider)
 		log.SetClientLogger(logProvider, r.ServiceName)
 	}
