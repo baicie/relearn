@@ -1,3 +1,4 @@
+use std::io::{Read, Write};
 use std::net::TcpListener;
 
 fn main() {
@@ -6,7 +7,11 @@ fn main() {
     
     // let result = listener.accept().unwrap();
     for stream in listener.incoming() {
-        let _stream = stream.unwrap();
-        println!("Connection established!")
+        let mut stream = stream.unwrap();
+        println!("Connection established!");
+        let mut buffer = [0; 1024];
+
+        stream.read(&mut buffer).unwrap();
+        stream.write(&mut buffer).unwrap();
     }
 }
