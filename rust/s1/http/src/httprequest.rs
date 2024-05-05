@@ -42,7 +42,7 @@ pub enum Resurce {
 #[derive(Debug, )]
 pub struct HttpRequest {
     pub method: Method,
-    pub path: Resurce,
+    pub resource: Resurce,
     pub version: Version,
     pub headers: HashMap<String, String>,
     pub msg_body: String,
@@ -75,7 +75,7 @@ impl From<String> for HttpRequest  {
 
             HttpRequest {
                 method: parsed_method,
-                path: parsed_path,
+                resource: parsed_path,
                 version: parsed_version,
                 headers: parsed_headers,
                 msg_body: parsed_msg_body.to_string(),
@@ -131,7 +131,7 @@ mod tests {
         let req:HttpRequest = s.into();
 
         assert_eq!(req.method, Method::Get);
-        assert_eq!(req.path, Resurce::Path("/greeting".to_string()));
+        assert_eq!(req.resource, Resurce::Path("/greeting".to_string()));
         assert_eq!(req.version, Version::V1_1);
         assert_eq!(req.headers, headers_expected);
     }
