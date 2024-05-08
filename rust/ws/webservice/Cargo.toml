@@ -9,8 +9,8 @@ default-run = "teacher-service"
 [dependencies]
 actix-web = "4.5.1"
 actix-rt = "2.9.0"
-serde = {version = "1.0.132",futures=["derive"]}
-chrono = {version = "0.4.38",futures=["serde"]}
+serde = { version = "1.0.201", features = ["derive"] }
+chrono = { version = "0.4.38", features = ["serde"] }
 
 [[bin]]
 name = "server1"

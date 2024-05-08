@@ -10,7 +10,7 @@ pub struct Course {
     pub time:Option<NaiveDateTime>
 }
 
-impl Form<web::Json<Course>> for Course{
+impl Form<web::Json<Course>> for Course {
     fn from(course: web::Json<Course>) -> Self {
          Course{
             teacher_id: course.teacher_id,
