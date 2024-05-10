@@ -1,8 +1,8 @@
-use actix_web::web::{self, Form};
+use actix_web::web;
 use chrono::NaiveDateTime;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive( Serialize, Deserialize,Debug, Clone)]
 pub struct Course {
     pub teacher_id: usize,
     pub id: Option<usize>,
@@ -10,7 +10,7 @@ pub struct Course {
     pub time:Option<NaiveDateTime>
 }
 
-impl Form<web::Json<Course>> for Course {
+impl From<web::Json<Course>> for Course {
     fn from(course: web::Json<Course>) -> Self {
          Course{
             teacher_id: course.teacher_id,
