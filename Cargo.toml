@@ -1,6 +1,6 @@
 [workspace]
 members = [
-  "crates/*", "rust/s1", "rust/ws",
+  "crates/*", "rust/db", "rust/s1", "rust/ws",
 ]
 resolver = "2"
 [profile.release]

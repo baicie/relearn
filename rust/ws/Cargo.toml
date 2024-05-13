@@ -1,4 +1,4 @@
-workspace = { members = ["webservice"] }
+workspace = { members = [ "db","webservice"] }
 [package]
 name = "ws"
 version = "0.1.0"
