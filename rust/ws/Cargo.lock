@@ -2138,7 +2138,9 @@ dependencies = [
  "actix-rt",
  "actix-web",
  "chrono",
+ "dotenv",
  "serde",
+ "sqlx",
 ]
 
 [[package]]
