@@ -1,7 +1,7 @@
 use actix_web::{error, http::StatusCode, HttpResponse};
 use serde::Serialize;
 use sqlx::error::Error as SQLxError;
-use std::fmt::{self, write};
+use std::fmt::{self};
 
 #[derive(Debug)]
 pub enum AppError {
