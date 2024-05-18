@@ -1,6 +1,6 @@
 use std::sync::Mutex;
 
-use crate::{db_access::*, models::Course};
+use crate::{db_access::*, error::AppError, models::Course};
 
 use super::state::AppState;
 use actix_web::{http::StatusCode, web, HttpResponse};
@@ -17,28 +17,31 @@ pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpRespons
 pub async fn get_courses_for_teacher(
     app_state: web::Data<AppState>,
     params: web::Path<usize>,
-) -> HttpResponse {
+) -> Result<HttpResponse, AppError> {
     let teacher_id = i32::try_from(params.into_inner()).unwrap();
-    let courses = get_courses_for_teacher_db(&app_state.db, teacher_id).await;
-    HttpResponse::Ok().json(courses)
+    get_courses_for_teacher_db(&app_state.db, teacher_id)
+        .await
+        .map(|courses| HttpResponse::Ok().json(courses))
 }
 
 pub async fn add_course(
     new_course: web::Json<Course>,
     app_state: web::Data<AppState>,
-) -> HttpResponse {
-    let course = post_new_course_db(&app_state.db, new_course.into()).await;
-    HttpResponse::Ok().json(course)
+) -> Result<HttpResponse, AppError> {
+    post_new_course_db(&app_state.db, new_course.into())
+        .await
+        .map(|course| HttpResponse::Ok().json(course))
 }
 
 pub async fn get_course_by_id(
     app_state: web::Data<AppState>,
     params: web::Path<(usize, usize)>,
-) -> HttpResponse {
+) -> Result<HttpResponse, AppError> {
     let teacher_id = i32::try_from(params.0).unwrap();
     let course_id = i32::try_from(params.1).unwrap();
-    let course = get_course_details_db(&app_state.db, teacher_id, course_id).await;
-    HttpResponse::Ok().json(course)
+    get_course_details_db(&app_state.db, teacher_id, course_id)
+        .await
+        .map(|course| HttpResponse::Ok().json(course))
 }
 
 #[cfg(test)]
@@ -62,7 +65,9 @@ mod tests {
         });
 
         let teacher_id: web::Path<usize> = web::Path::from(1);
-        let resp = get_courses_for_teacher(app_state, teacher_id).await;
+        let resp = get_courses_for_teacher(app_state, teacher_id)
+            .await
+            .unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
     }
 
@@ -78,11 +83,11 @@ mod tests {
         });
         let course = web::Json(Course {
             teacher_id: 1,
-            id: Some(3),
+            id: Some(4),
             name: "Math".to_string(),
             time: None,
         });
-        let resp = add_course(course, app_state).await;
+        let resp = add_course(course, app_state).await.unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
     }
 
@@ -98,7 +103,7 @@ mod tests {
         });
 
         let params = web::Path::from((1, 1));
-        let resp = get_course_by_id(app_state, params).await;
+        let resp = get_course_by_id(app_state, params).await.unwrap();
         assert_eq!(resp.status(), StatusCode::OK);
     }
 }
