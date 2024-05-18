@@ -1,6 +1,6 @@
 use std::sync::Mutex;
 
-use crate::models::Course;
+use crate::{db_access::*, models::Course};
 
 use super::state::AppState;
 use actix_web::{http::StatusCode, web, HttpResponse};
@@ -18,21 +18,27 @@ pub async fn get_courses_for_teacher(
     app_state: web::Data<AppState>,
     params: web::Path<usize>,
 ) -> HttpResponse {
-    HttpResponse::Ok().json("success")
+    let teacher_id = i32::try_from(params.into_inner()).unwrap();
+    let courses = get_courses_for_teacher_db(&app_state.db, teacher_id).await;
+    HttpResponse::Ok().json(courses)
 }
 
 pub async fn add_course(
     new_course: web::Json<Course>,
     app_state: web::Data<AppState>,
 ) -> HttpResponse {
-    HttpResponse::Ok().json("success")
+    let course = post_new_course_db(&app_state.db, new_course.into()).await;
+    HttpResponse::Ok().json(course)
 }
 
 pub async fn get_course_by_id(
     app_state: web::Data<AppState>,
     params: web::Path<(usize, usize)>,
 ) -> HttpResponse {
-    HttpResponse::Ok().json("success")
+    let teacher_id = i32::try_from(params.0).unwrap();
+    let course_id = i32::try_from(params.1).unwrap();
+    let course = get_course_details_db(&app_state.db, teacher_id, course_id).await;
+    HttpResponse::Ok().json(course)
 }
 
 #[cfg(test)]
@@ -72,7 +78,7 @@ mod tests {
         });
         let course = web::Json(Course {
             teacher_id: 1,
-            id: None,
+            id: Some(3),
             name: "Math".to_string(),
             time: None,
         });
