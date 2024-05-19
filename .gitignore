@@ -43,3 +43,10 @@ build
 
 cpp/**/*.dSYM
 .vscode
+
+/target
+**/*.rs.bk
+Cargo.lock
+bin/
+pkg/
+wasm-pack.log
