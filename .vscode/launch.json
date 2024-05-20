@@ -2,49 +2,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "java",
-      "name": "Demo",
-      "request": "launch",
-      "mainClass": "Demo",
-      "projectName": "relearn_6c657bed"
-    },
-    {
-      "type": "java",
-      "name": "Hello",
-      "request": "launch",
-      "mainClass": "Hello",
-      "projectName": "relearn_6c657bed"
-    },
-    {
-      "name": "(lldb) 启动",
-      "type": "cppdbg",
-      "request": "launch",
-      "program": "输入程序名称，例如 ${workspaceFolder}/a.out",
-      "args": [],
-      "stopAtEntry": false,
-      "cwd": "${fileDirname}",
-      "environment": [],
-      "externalConsole": false,
-      "MIMode": "lldb"
-    },
-    {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "cppdbg",
-      "request": "launch",
-      "args": [],
-      "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "d:/workspace/git-code/relearn/cpp/3/3.2",
-      "program": "d:/workspace/git-code/relearn/cpp/3/3.2/build/Debug/outDebug",
-      "MIMode": "gdb",
-      "miDebuggerPath": "gdb",
-      "setupCommands": [
-        {
-          "description": "Enable pretty-printing for gdb",
-          "text": "-enable-pretty-printing",
-          "ignoreFailures": true
-        }
-      ]
+      "name": "(lldb) Launch", // 配置名称
+      "type": "cppdbg", // 调试器类型
+      "request": "launch", // 请求类型
+      "program": "${workspaceFolder}/cpp/demo2", // 可执行文件的路径
+      "args": [], // 传递给程序的命令行参数
+      "stopAtEntry": false, // 是否在程序入口处停止
+      "cwd": "${workspaceFolder}/cpp/demo2", // 工作目录
+      "environment": [], // 环境变量
+      "externalConsole": false, // 是否使用外部控制台
+      "MIMode": "lldb", // MI 调试器模式
+      "preLaunchTask": "build" // 在启动前执行的任务，通常是构建任务
     }
   ]
 }
